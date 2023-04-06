@@ -1,0 +1,192 @@
+<div class="bg-light">
+	<div class="px-4 py-2 my-5 text-center">
+		<img
+			class="d-block mx-auto mb-4"
+			src="/docs/5.2/assets/brand/bootstrap-logo.svg"
+			alt=""
+			width="72"
+			height="57"
+		/>
+		<h1 class="display-5 fw-bold">Token Frenzy</h1>
+	</div>
+
+	<div class="container mb-3">
+		<div class="row">
+			<div class="col-lg-8 rounded-4 shadow py-1">
+				<h2 class="form-control text-bg-info rounded-1 shadow py-1 mb-4">
+					<strong>Lottery parameters</strong>
+				</h2>
+				<div class="mb-3 row">
+					<div class="form-floating">
+						<input
+							#cAddress
+							type="string"
+							class="form-control rounded-3"
+							id="floatingInput"
+							placeholder="address"
+						/>
+						<label for="floatingInput">Enter lottery address here</label>
+						<button
+							class="w-10 mb-2 btn rounded-3 btn-primary"
+							type="submit"
+							(click)="getContract(cAddress.value)"
+						>
+							Find
+						</button>
+					</div>
+				</div>
+				<div class="mb-3">
+					<div class="row g-2">
+						<div class="text-decoration-underline col-auto">Lottery open:</div>
+						<div class="col-auto">
+							<strong>{{ lotteryOpen }}</strong>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="text-decoration-underline">Accepted tokens:</div>
+						</div>
+						<div class="col-sm-4">
+							<ul>
+								<li *ngFor="let token of acceptedTokens">{{ token }}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="row g-2">
+						<div class="text-decoration-underline col-auto">Owners fee(%):</div>
+						<div class="col-auto">
+							<strong>{{ ownersFee / 100 }}</strong>
+						</div>
+					</div>
+					<div class="row g-2">
+						<div class="text-decoration-underline col-auto">
+							Minimum bet(in WETH worth):
+						</div>
+						<div class="col-auto">
+							<strong>{{ minBet }}</strong>
+						</div>
+					</div>
+					<div class="row g-2">
+						<div class="text-decoration-underline col-auto">
+							Total bets(in WETH worth):
+						</div>
+						<div class="col-auto">
+							<strong>{{ totalBets }}</strong>
+						</div>
+					</div>
+
+					<div class="row g-2">
+						<div class="text-decoration-underline col-auto">Winner:</div>
+						<div class="col-auto">
+							<strong>{{ winner }}</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 rounded-4 shadow">
+				<button class="btn btn-primary" (click)="connectMetamask()">
+					Connect Wallet
+				</button>
+				<p *ngIf="walletAddress">{{ walletAddress }}</p>
+				<h2 class="form-control text-bg-info shadow rounded-1 shadow py-1 mb-4">
+					<strong>Latest bets</strong>
+				</h2>
+			</div>
+		</div>
+		<div class="row p-1">
+			<div class="col-lg-8 rounded-4 shadow">
+				<h2 class="form-control text-bg-info rounded-1 shadow py-1 mb-4">
+					<strong>Lottery interaction</strong>
+				</h2>
+
+				<form class="row g-3">
+					<div class="col-2">
+						<button
+							type="button"
+							class="btn btn-outline-success btn-sm px-1 gap-2"
+							(click)="enterLottery(tokenAddress.value, amount.value)"
+						>
+							Enter Lottery
+						</button>
+					</div>
+					<div class="col-auto">
+						<label for="tokenAddress" class="visually-hidden p-3"
+							>Address</label
+						>
+						<input
+							#tokenAddress
+							type="address"
+							class="form-floating gap-2"
+							id="tokenAddress"
+							placeholder="Token Address"
+						/>
+						<label for="amount" class="visually-hidden">Amount</label>
+						<input
+							#amount
+							type="address"
+							class="form-floating w-25 p"
+							id="tokenAddress"
+							placeholder="Amount"
+						/>
+					</div>
+				</form>
+
+				<form class="row g-3 py-2">
+					<div class="col-2">
+						<button
+							type="button"
+							class="btn btn-outline-success btn-sm px-1 gap-2"
+							(click)="getOdds(address.value)"
+						>
+							Get odds
+						</button>
+					</div>
+					<div class="col-auto">
+						<label for="tokenAddress" class="visually-hidden p-3"
+							>Address</label
+						>
+						<input
+							#address
+							type="address"
+							class="form-floating gap-2"
+							id="tokenAddress"
+							placeholder="Player Address"
+						/>
+						<div class="col-auto">{{ odds }}%</div>
+					</div>
+				</form>
+
+				<div class="py-2">
+					<button
+						type="button"
+						class="btn btn-outline-success btn-sm px-1"
+						(click)="closeLottery()"
+					>
+						Close Lottery
+					</button>
+				</div>
+
+				<div>
+					<button
+						type="button"
+						class="btn btn-outline-success btn-sm"
+						(click)="findWinner()"
+					>
+						Find Winner
+					</button>
+				</div>
+
+				<div class="py-2">
+					<button
+						type="button"
+						class="btn btn-outline-success btn-sm"
+						(click)="withdrawTokens()"
+					>
+						Withdraw Tokens
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
